@@ -7,7 +7,7 @@
     <!--begin::Primary Meta Tags-->
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="title" content="AdminLTE | Dashboard v2" />
-    <meta name="Customer" content="ColorlibHQ" />
+    <meta name="Book" content="ColorlibHQ" />
     <meta
       name="description"
       content="AdminLTE is a Free Bootstrap 5 Admin Dashboard, 30 example pages using Vanilla JS."
@@ -222,19 +222,18 @@
           <div class="container-fluid">
             <!--begin::Row-->
             <div class="row">
-              <div class="col-sm-6">
-                <h3 class="mb-0">Customer Management</h3>
-              </div>
-              <div class="col-6 d-flex justify-content-end align-items-center py-3">
-                <button
-                  class="btn btn-primary"
-                  data-bs-toggle="modal"
-                  data-bs-target="#addCustomerModal"
-                >
-                  Add New
-                </button>
+              <div class="col-12 d-flex justify-content-between pb-4">
+                <h3 class="mb-0">Book Management</h3>
+                  <button
+                    class="btn btn-primary"
+                    data-bs-toggle="modal"
+                    data-bs-target="#addBookModal"
+                  >
+                    Add New Book
+                  </button>
               </div>
             </div>
+            <!--end::Row-->
 
             <div class="row">
               <div class="col-12">
@@ -242,14 +241,15 @@
                   <thead>
                     <tr>
                       <th scope="col">ID</th>
-                      <th scope="col">Name</th>
-                      <th scope="col">Email</th>
-                      <th scope="col">Phone</th>
+                      <th scope="col">Title</th>
+                      <th scope="col">Price</th>
+                      <th scope="col">Quantity</th>
+                      <th scope="col">Author ID</th>
                       <th scope="col">Update</th>
                       <th scope="col">Delete</th>
                     </tr>
                   </thead>
-                  <tbody id="customerList"></tbody>
+                  <tbody id="bookList"></tbody>
                 </table>
               </div>
             </div>
@@ -257,27 +257,21 @@
           </div>
           <!--end::Container-->
         </div>
-        <div class="app-content">
-          <!--begin::Container-->
-          <div class="container-fluid">
-            <div class="row"></div>
-          </div>
           <!--end::Container-->
-        </div>
 
-        <!-- Add Customer Modal -->
+        <!-- Add Book Modal -->
         <div
           class="modal fade modal-lg"
-          id="addCustomerModal"
+          id="addBookModal"
           tabindex="-1"
-          aria-labelledby="addCustomerModalLabel"
+          aria-labelledby="addBookModalLabel"
           aria-hidden="true"
         >
           <div class="modal-dialog">
             <div class="modal-content">
               <div class="modal-header">
-                <h1 class="modal-title fs-5" id="addCustomerModalLabel">
-                  Add New Customer
+                <h1 class="modal-title fs-5" id="addBookModalLabel">
+                  Add New Book
                 </h1>
                 <button
                   type="button"
@@ -288,18 +282,25 @@
               </div>
               <div class="modal-body">
                 <div class="mb-3">
-                  <label class="form-label">Customer Name</label>
-                  <input type="text" class="form-control" id="nameID" />
+                  <label class="form-label">Title</label>
+                  <input type="text" class="form-control" id="titleID" />
                 </div>
 
                 <div class="mb-3">
-                  <label class="form-label">Customer Email</label>
-                  <input type="email" class="form-control" id="emailID" />
+                  <label class="form-label"> Price</label>
+                  <input type="text" class="form-control" id="priceID" />
                 </div>
 
                 <div class="mb-3">
-                  <label class="form-label">Customer Phone</label>
-                  <input type="text" class="form-control" id="phoneID" />
+                  <label class="form-label">Quantity</label>
+                  <input type="text" class="form-control" id="quantityID" />
+                </div>
+
+                <div class="mb-3">
+                  <label class="form-label">Author ID</label>
+                  <select class="form-select" id="authorID">
+                    <option>Select Author</option>
+                  </select>
                 </div>
               </div>
               <div class="modal-footer">
@@ -311,7 +312,7 @@
                   Close
                 </button>
                 <button
-                  onclick="addCustomer()"
+                  onclick="addBook()"
                   type="button"
                   class="btn btn-primary"
                 >
@@ -322,19 +323,19 @@
           </div>
         </div>
 
-        <!-- Edit Customer Modal -->
+        <!-- Edit Book Modal -->
         <div
           class="modal fade modal-lg"
-          id="editCustomerModal"
+          id="editBookModal"
           tabindex="-1"
-          aria-labelledby="editCustomerModalLabel"
+          aria-labelledby="editBookModalLabel"
           aria-hidden="true"
         >
           <div class="modal-dialog">
             <div class="modal-content">
               <div class="modal-header">
-                <h1 class="modal-title fs-5" id="editCustomerModalLabel">
-                  Update Existing Customer
+                <h1 class="modal-title fs-5" id="editBookModalLabel">
+                  Edit Existing Book
                 </h1>
                 <button
                   type="button"
@@ -345,21 +346,27 @@
               </div>
               <div class="modal-body">
                 <div class="mb-3">
-                  <label class="form-label">Customer Name</label>
-                  <input type="text" class="form-control" id="nameIDE" />
+                  <label class="form-label">Title</label>
+                  <input type="text" class="form-control" id="titleIDE" />
                 </div>
 
                 <div class="mb-3">
-                  <label class="form-label">Customer Email</label>
-                  <input type="email" class="form-control" id="emailIDE" />
+                  <label class="form-label"> Price</label>
+                  <input type="text" class="form-control" id="priceIDE" />
                 </div>
 
                 <div class="mb-3">
-                  <label class="form-label">Customer Phone</label>
-                  <input type="text" class="form-control" id="phoneIDE" />
+                  <label class="form-label">Quantity</label>
+                  <input type="text" class="form-control" id="quantityIDE" />
                 </div>
 
+                <div class="mb-3">
+                  <label class="form-label">Author ID</label>
+                    <select class="form-select" id="authorIDE">
+                        <option>Select Author</option>
+                    </select>
               </div>
+
               <div class="modal-footer">
                 <button
                   type="button"
@@ -369,7 +376,7 @@
                   Close
                 </button>
                 <button
-                  onclick="updateCustomer()"
+                  onclick="updateBook()"
                   type="button"
                   class="btn btn-primary"
                 >
@@ -380,50 +387,26 @@
           </div>
         </div>
 
-        <!-- Delete Customer Modal -->
-        <div
-          class="modal fade"
-          id="deleteCustomerModal"
-          tabindex="-1"
-          aria-labelledby="deleteCustomerModalLabel"
-          aria-hidden="true"
-        >
-          <div class="modal-dialog">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h1 class="modal-title fs-5" id="deleteCustomerModalLabel">
-                  Do you wanna delete?
-                </h1>
-                <button
-                  type="button"
-                  class="btn-close"
-                  data-bs-dismiss="modal"
-                  aria-label="Close"
-                ></button>
-              </div>
-              <div class="modal-body">
-                <p>Once you delete can not retrive !</p>
-              </div>
-              <div class="modal-footer">
-                <button
-                  type="button"
-                  class="btn btn-secondary"
-                  data-bs-dismiss="modal"
-                >
-                  No
-                </button>
-                <button
-                  onclick="deleteCustomerFinally()"
-                  type="button"
-                  class="btn btn-primary"
-                >
-                  Yes
-                </button>
+          <!-- Delete Confirmation Modal -->
+          <div class="modal fade" id="deleteBookModal" tabindex="-1" aria-labelledby="deleteBookModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h1 class="modal-title fs-5" id="deleteBookModalLabel">Do you want to delete?</h1>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                  <p>Once deleted, this action cannot be undone!</p>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
+                  <button onclick="deleteBookFinally()" type="button" class="btn btn-danger">Yes</button>
+                </div>
               </div>
             </div>
           </div>
-        </div>
-        <!--end::App Content-->
+
+          <!--end::App Content-->
       </main>
 
       <!--end::App Main-->
@@ -434,8 +417,8 @@
         <!--end::To the end-->
         <!--begin::Copyright-->
         <strong>
-          Copyright &copy; 2025 &nbsp;
-          <a href="#" class="text-decoration-none">@info.bd.com</a>.
+          Copyright &copy; 2014-2024&nbsp;
+          <a href="#" class="text-decoration-none">AdminLTE.io</a>.
         </strong>
         All rights reserved.
         <!--end::Copyright-->
@@ -500,40 +483,84 @@
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 
     <script>
-      async function getCustomers() {
-        let URL = "https://bs-api.sobuj.net/view/customers/readCustomers.php";
-        let tableData = document.getElementById("customerList");
+
+
+
+      //Fetch Author Data and show it in the select option in the add book modal
+      async function getAuthors(elementID) {
+        let URL = "https://bs-api.sobuj.net/view/authors/readAuthors.php";
+        let authorSelect = document.getElementById(elementID);
+
+        try {
+          // Show loading message
+          authorSelect.innerHTML = "<option>Loading.....</option>";
+
+          // Fetch API from Authors
+          let response = await axios.get(URL);
+          let Authors = response.data;
+
+          // Clear loading message
+          authorSelect.innerHTML = "";
+
+          // If no data exists .. show a message
+          if (!Authors.length) {
+            authorSelect.innerHTML = "<option>No Author found</option>";
+            return;
+          }
+
+          // Append authors to the select dropdown
+          Authors.forEach((Author) => {
+            let option = document.createElement("option");
+            option.value = Author["author_id"];
+            option.innerText = Author["name"];
+            authorSelect.appendChild(option);
+          });
+
+        } catch (error) {
+          console.error("Error loading Authors:", error);
+          authorSelect.innerHTML = "<option>Failed to load Author, try again</option>";
+        } finally {
+          console.log("Author fetch completed");
+        }
+      }
+
+
+      // Fetch Book Data
+      async function getBooks() {
+        let URL = "https://bs-api.sobuj.net/view/books/readBook.php";
+        let tableData = document.getElementById("bookList");
 
         try {
           //show loading message
           tableData.innerHTML = "<tr><td colspan='5'>Loading.....</td></tr>";
 
-          //Fetch API from Customers
+          //Fetch API from Books
           let response = await axios.get(URL);
-          let customers = response.data;
+          let Books = response.data;
 
           //Clear loading message
           tableData.innerHTML = "";
 
           //If no data exists .. show a text
 
-          if (!customers.length) {
+          if (!Books.length) {
             tableData.innerHTML =
-              "<tr><td colspan='5'>No Customer found</td></tr>";
+              "<tr><td colspan='5'>No Book found</td></tr>";
             return;
           }
 
           //Append data to table
 
-          customers.forEach((customer) => {
+          Books.forEach((Book) => {
             let row = document.createElement("tr");
             row.innerHTML = `
-                    <td>${customer["customer_id"]}</td>
-                    <td>${customer["name"]}</td>
-                    <td>${customer["email"]}</td>
-                    <td>${customer["phone"]}</td>
-                    <td><button class="btn btn-success update-btn" data-id="${customer["customer_id"]}">Update</button></td>
-                    <td><button class="btn btn-danger delete-btn" data-id="${customer["customer_id"]}">Delete</button></td>
+                    <td>${Book["book_id"]}</td>
+                    <td>${Book["title"]}</td>
+                    <td>${Book["price"]}</td>
+                    <td>${Book["stock_quantity"]}</td>
+                    <td>${Book["author_id"]}</td>
+                    <td><button class="btn btn-success update-btn" data-id="${Book["book_id"]}">Update</button></td>
+                    <td><button class="btn btn-danger delete-btn" data-id="${Book["book_id"]}">Delete</button></td>
                 `;
             tableData.appendChild(row);
           });
@@ -548,175 +575,204 @@
           //Add event listner for delete data fetch
           document.querySelectorAll(".delete-btn").forEach((btn) => {
             btn.addEventListener("click", function () {
-              deleteCustomer(this.dataset.id);
+              deleteBook(this.dataset.id);
             });
           });
         } catch (error) {
-          console.error("Error for Customers:", error);
+          console.error("Error for Books:", error);
           tableData.innerHTML =
-            "<tr><td colspan='5'>Failed to load Customer, try again</td></tr>";
+            "<tr><td colspan='5'>Failed to load Book, try again</td></tr>";
         } finally {
-          console.log("Customer fetch completed");
+          console.log("Book fetch completed");
         }
       }
+      getBooks();
 
-      getCustomers();
 
-      async function addCustomer() {
-        let URL = "https://bs-api.sobuj.net/view/customers/insertCustomer.php";
-        let customerName = document.getElementById("nameID").value.trim();
-        let customerEmail = document.getElementById("emailID").value.trim();
-        let customerPhone = document.getElementById("phoneID").value.trim();
+      // Fetch authors when the modal opens
+      document.getElementById("addBookModal").addEventListener("shown.bs.modal", function () {
+        getAuthors("authorID");
+      });
 
-        try {
-          //Validate
-          if (!customerName || !customerEmail || !customerPhone) {
+// Function to close the modal
+function closeBookModal() {
+    let modalElement = document.getElementById("addBookModal");
+    let modalInstance = bootstrap.Modal.getInstance(modalElement);
+    if (modalInstance) {
+        modalInstance.hide();
+    }
+}
+
+// Add Book Function
+async function addBook() {
+    let URL = "https://bs-api.sobuj.net/view/books/insertBook.php";
+    let BookTitle = document.getElementById("titleID").value.trim();
+    let BookPrice = document.getElementById("priceID").value.trim();
+    let BookQuantity = document.getElementById("quantityID").value.trim();
+    let AuthorID = document.getElementById("authorID").value;
+
+    try {
+        // Validate
+        if (!BookTitle || !BookPrice || !BookQuantity || !AuthorID) {
             alert("All data required");
             return;
-          }
-
-          //Append Data
-          let formData = new FormData();
-          formData.append("name", customerName);
-          formData.append("email", customerEmail);
-          formData.append("phone", customerPhone);
-
-          //send the request
-          let response = await axios.post(URL, formData);
-
-          //Check API response
-          if (response.status === 200) {
-            alert("Customer successfully inserted");
-            document.getElementById("nameID").value = "";
-            document.getElementById("emailID").value = "";
-            document.getElementById("phoneID").value = "";
-
-            //Close Modal
-            let modal = bootstrap.Modal.getInstance(
-              document.getElementById("addCustomerModal")
-            );
-            modal.hide();
-
-            //Refresh the list
-            getCustomers();
-          } else {
-            alert("Failed to add Customer");
-          }
-        } catch (error) {
-          console.error("Erors for adding Customer", error);
-          alert("Failed, try again");
-        } finally {
-          console.log("Customer add att completed");
         }
-      }
 
-      let editCustomerID = null;
+        // Append Data
+        let formData = new FormData();
+        formData.append("title", BookTitle);
+        formData.append("price", BookPrice);
+        formData.append("stock_qty", BookQuantity);
+        formData.append("author_id", AuthorID);
+
+        // Send the request
+        let response = await axios.post(URL, formData);
+        console.log("Response", response);
+
+        // Check API response
+        if (response.status === 200) {
+            alert("Book successfully inserted");
+
+            // Clear Form Fields
+            document.getElementById("titleID").value = "";
+            document.getElementById("priceID").value = "";
+            document.getElementById("quantityID").value = "";
+            document.getElementById("authorID").value = "";
+
+            // Close Modal
+            closeBookModal();
+
+            // Refresh the book list
+            getBooks();
+        } else {
+            alert("Failed to add Book");
+        }
+    } catch (error) {
+        console.error("Errors for adding Book", error);
+        alert("Failed, try again");
+    } finally {
+        console.log("Book add attempt completed");
+    }
+}
+
+
+      let editBookID = null;
       //Get update data details
-      async function goToUpdate(customerID) {
-        let URL = `https://bs-api.sobuj.net/view/customers/getCustomerById.php?customer_id=${customerID}`;
+      async function goToUpdate(bookID) {
+        let URL = `https://bs-api.sobuj.net/view/books/getBookById.php?book_id=${bookID}`;
 
         try {
           let response = await axios.get(URL);
-          let customerData = response.data;
-          console.log(customerData.phone);
-      
-          if (customerData) {
+          let BookData = response.data;
+
+          console.log("Book Data", BookData);
+
+          if (BookData) {
             //populate data
-            document.getElementById("nameIDE").value = customerData.name;
-            document.getElementById("emailIDE").value = customerData.email;
-            document.getElementById("phoneIDE").value = customerData.phone;
-            editCustomerID = customerID;
+            document.getElementById("titleIDE").value = BookData.title;
+            document.getElementById("priceIDE").value = BookData.price;
+            document.getElementById("quantityIDE").value = BookData.stock_quantity;
+            document.getElementById("authorIDE").value = BookData.author_id;
+            editBookID = bookID;
 
             //show modal
             let editModal = new bootstrap.Modal(
-              document.getElementById("editCustomerModal")
+              document.getElementById("editBookModal")
             );
             editModal.show();
           } else {
-            alert("Customer not found");
+            alert("Book not found");
           }
         } catch (error) {
           console.error("Text", error);
-          alert("Customer load failed");
+          alert("Book load failed");
         }
       }
 
-      async function updateCustomer() {
-        let URL = "https://bs-api.sobuj.net/view/customers/updateCustomer.php";
-        let customerName = document.getElementById("nameIDE").value.trim();
-        let customerEmail = document.getElementById("emailIDE").value.trim();
-        let customerPhone = document.getElementById("phoneIDE").value.trim();
+      // Fetch authors when the modal opens
+      document.getElementById("editBookModal").addEventListener("shown.bs.modal", function () {
+        getAuthors("authorIDE");
+      });
+
+      // Function to close the modal
+      function closeBookModal() {
+        let modalElement = document.getElementById("editBookModal");
+        let modalInstance = bootstrap.Modal.getInstance(modalElement);
+        if (modalInstance) {
+          modalInstance.hide();
+        }
+      }
+
+      async function updateBook() {
+        let URL = "https://bs-api.sobuj.net/view/books/updateBook.php";
+        let BookTitle = document.getElementById("titleIDE").value.trim();
+        let BookPrice = document.getElementById("priceIDE").value.trim();
+        let BookQuantity = document.getElementById("quantityIDE").value.trim();
+        let BookAuthorID = document.getElementById("authorIDE").value;
 
         try {
-          //Validate
-          if (!customerName || !customerEmail || !customerPhone) {
+            //Validate
+            if (!BookTitle || !BookPrice || !BookQuantity || !BookAuthorID) {
             alert("All data required");
             return;
-          }
+            }
 
-          //Append Data
-          let formData = new FormData();
-          formData.append("customer_id", editCustomerID);
-          formData.append("name", customerName);
-          formData.append("email", customerEmail);
-          formData.append("phone", customerPhone);
+            //Append data
+            let formData = new FormData();
+            formData.append("book_id", editBookID);
+            formData.append("title", BookTitle);
+            formData.append("price", BookPrice);
+            formData.append("stock_qty", BookQuantity);
+            formData.append("author_id", BookAuthorID);
 
-          //send the request
-          let response = await axios.post(URL, formData);
+            //send the req
+            let response = await axios.post(URL, formData);
 
-          //Check API response
-          if (response.status === 200) {
-            alert("Customer successfully Updated");
-            document.getElementById("nameIDE").value = "";
-            document.getElementById("emailIDE").value = "";
-            document.getElementById("phoneIDE").value = "";
+            //check API response
+            if (response.status === 200) {
+                alert("Book Updated Successfully");
 
-            //Close Modal
-            let modal = bootstrap.Modal.getInstance(
-              document.getElementById("editCustomerModal")
-            );
-            modal.hide();
+            //close the modal
+              closeBookModal();
 
-            //Refresh the list
-            getCustomers();
-          } else {
-            alert("Failed to Update Customer");
-          }
-        } catch (error) {
-          console.error("Erors for update Customer", error);
-          alert("Failed, try again");
-        } finally {
-          console.log("Customer update att completed");
+                //refresh
+                getBooks();
+            } else {
+                alert("Failed to update Book");
+            }
+            } catch (error) {
+            console.error("Test ", error);
+            alert("Update failed, try again");
         }
+
       }
 
-      //Delete modal show
-      let deleteCustomerID = null;
 
-      function deleteCustomer(customerID) {
-        deleteCustomerID = customerID;
-        console.log("Delete ID", deleteCustomerID);
+      //Delete modal show
+      let deleteBookID = null;
+      function deleteBook(authorID) {
+        deleteBookID = authorID;
         //show delete modal
         let deleteModal = new bootstrap.Modal(
-          document.getElementById("deleteCustomerModal")
+                document.getElementById("deleteBookModal")
         );
         deleteModal.show();
       }
 
       //Delete finally
 
-      async function deleteCustomerFinally() {
-        let URL = "https://bs-api.sobuj.net/view/customers/deleteCustomer.php";
+      async function deleteAuthorFinally() {
+        let URL = "https://bs-api.sobuj.net/view/authors/deleteAuthor.php";
 
         try {
-          if (!deleteCustomerID) {
+          if (!deleteBookID) {
             alert("Invalid ID");
             return;
           }
 
           //Append data
           let formData = new FormData();
-          formData.append("customer_id", deleteCustomerID);
+          formData.append("author_id", deleteBookID);
 
           //send the req
           let response = await axios.post(URL, formData);
@@ -727,14 +783,14 @@
 
             //close the modal
             let modal = bootstrap.Modal.getInstance(
-              document.getElementById("deleteCustomerModal")
+                    document.getElementById("deleteBookModal")
             );
             modal.hide();
 
-            //refresh
-            getCustomers();
+            getBooks();
+
           } else {
-            alert("Failed to delete Customer");
+            alert("Failed to delete Book");
           }
         } catch (error) {
           console.error("Test ", error);
