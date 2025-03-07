@@ -386,27 +386,50 @@
             </div>
           </div>
         </div>
-
-          <!-- Delete Confirmation Modal -->
-          <div class="modal fade" id="deleteBookModal" tabindex="-1" aria-labelledby="deleteBookModalLabel" aria-hidden="true">
-            <div class="modal-dialog">
-              <div class="modal-content">
-                <div class="modal-header">
-                  <h1 class="modal-title fs-5" id="deleteBookModalLabel">Do you want to delete?</h1>
-                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                  <p>Once deleted, this action cannot be undone!</p>
-                </div>
-                <div class="modal-footer">
-                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
-                  <button onclick="deleteBookFinally()" type="button" class="btn btn-danger">Yes</button>
-                </div>
-              </div>
+        </div>
+        <!-- Delete Book Modal -->
+        <div
+        class="modal fade"
+        id="deleteBookModal"
+        tabindex="-1"
+        aria-labelledby="deleteBookModalLabel"
+        aria-hidden="true"
+        >
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h1 class="modal-title fs-5" id="deleteBookModalLabel">
+                Do you wanna delete?
+              </h1>
+              <button
+                type="button"
+                class="btn-close"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+              ></button>
+            </div>
+            <div class="modal-body">
+              <p>Once you delete can not retrive !</p>
+            </div>
+            <div class="modal-footer">
+              <button
+                type="button"
+                class="btn btn-secondary"
+                data-bs-dismiss="modal"
+              >
+                No
+              </button>
+              <button
+                onclick="deleteBookFinally()"
+                type="button"
+                class="btn btn-primary"
+              >
+                Yes
+              </button>
             </div>
           </div>
-
-          <!--end::App Content-->
+        </div>
+        <!--end::App Content-->
       </main>
 
       <!--end::App Main-->
@@ -483,7 +506,6 @@
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 
     <script>
-
 
 
       //Fetch Author Data and show it in the select option in the add book modal
@@ -588,72 +610,72 @@
       }
       getBooks();
 
-
-      // Fetch authors when the modal opens
-      document.getElementById("addBookModal").addEventListener("shown.bs.modal", function () {
-        getAuthors("authorID");
-      });
+// Fetch authors when the modal opens
+document.getElementById("addBookModal").addEventListener("shown.bs.modal", function () {
+  getAuthors("authorID");
+});
 
 // Function to close the modal
 function closeBookModal() {
-    let modalElement = document.getElementById("addBookModal");
-    let modalInstance = bootstrap.Modal.getInstance(modalElement);
-    if (modalInstance) {
-        modalInstance.hide();
-    }
+  let modalElement = document.getElementById("addBookModal");
+  let modalInstance = bootstrap.Modal.getInstance(modalElement); // Bootstrap Modal instance
+  if (modalInstance) {
+    modalInstance.hide(); // Close the modal
+  }
 }
 
 // Add Book Function
 async function addBook() {
-    let URL = "https://bs-api.sobuj.net/view/books/insertBook.php";
-    let BookTitle = document.getElementById("titleID").value.trim();
-    let BookPrice = document.getElementById("priceID").value.trim();
-    let BookQuantity = document.getElementById("quantityID").value.trim();
-    let AuthorID = document.getElementById("authorID").value;
+  let URL = "https://bs-api.sobuj.net/view/books/insertBook.php";
+  let BookTitle = document.getElementById("titleID").value.trim();
+  let BookPrice = document.getElementById("priceID").value.trim();
+  let BookQuantity = document.getElementById("quantityID").value.trim();
+  let AuthorID = document.getElementById("authorID").value;
 
-    try {
-        // Validate
-        if (!BookTitle || !BookPrice || !BookQuantity || !AuthorID) {
-            alert("All data required");
-            return;
-        }
-
-        // Append Data
-        let formData = new FormData();
-        formData.append("title", BookTitle);
-        formData.append("price", BookPrice);
-        formData.append("stock_qty", BookQuantity);
-        formData.append("author_id", AuthorID);
-
-        // Send the request
-        let response = await axios.post(URL, formData);
-        console.log("Response", response);
-
-        // Check API response
-        if (response.status === 200) {
-            alert("Book successfully inserted");
-
-            // Clear Form Fields
-            document.getElementById("titleID").value = "";
-            document.getElementById("priceID").value = "";
-            document.getElementById("quantityID").value = "";
-            document.getElementById("authorID").value = "";
-
-            // Close Modal
-            closeBookModal();
-
-            // Refresh the book list
-            getBooks();
-        } else {
-            alert("Failed to add Book");
-        }
-    } catch (error) {
-        console.error("Errors for adding Book", error);
-        alert("Failed, try again");
-    } finally {
-        console.log("Book add attempt completed");
+  try {
+    // Validate
+    if (!BookTitle || !BookPrice || !BookQuantity || !AuthorID) {
+      alert("All data required");
+      return;
     }
+
+    // Append Data
+    let formData = new FormData();
+    formData.append("title", BookTitle);
+    formData.append("price", BookPrice);
+    formData.append("stock_qty", BookQuantity);
+    formData.append("author_id", AuthorID);
+
+    // Send the request
+    let response = await axios.post(URL, formData);
+    console.log("Response", response);
+
+    // Check API response
+    if (response.status === 200) {
+      alert("Book successfully inserted");
+
+      // Clear Form Fields
+      document.getElementById("titleID").value = "";
+      document.getElementById("priceID").value = "";
+      document.getElementById("quantityID").value = "";
+      document.getElementById("authorID").value = "";
+
+      // Close Modal
+      closeBookModal();
+
+      // Refresh the book list
+      getBooks();
+    } else {
+      alert("Failed to add Book");
+    }
+  } catch (error) {
+    console.error("Errors for adding Book", error);
+    alert("Failed, try again");
+  } finally {
+    console.log("Book add attempt completed");
+  }
 }
+
 
 
       let editBookID = null;
@@ -694,15 +716,6 @@ async function addBook() {
         getAuthors("authorIDE");
       });
 
-      // Function to close the modal
-      function closeBookModal() {
-        let modalElement = document.getElementById("editBookModal");
-        let modalInstance = bootstrap.Modal.getInstance(modalElement);
-        if (modalInstance) {
-          modalInstance.hide();
-        }
-      }
-
       async function updateBook() {
         let URL = "https://bs-api.sobuj.net/view/books/updateBook.php";
         let BookTitle = document.getElementById("titleIDE").value.trim();
@@ -732,11 +745,15 @@ async function addBook() {
             if (response.status === 200) {
                 alert("Book Updated Successfully");
 
-            //close the modal
-              closeBookModal();
-
+                //close the modal
+                let modal = bootstrap.Modal.getInstance(
+                document.getElementById("editBookModal")
+                );
+                modal.hide();
+              
                 //refresh
                 getBooks();
+
             } else {
                 alert("Failed to update Book");
             }
@@ -750,43 +767,48 @@ async function addBook() {
 
       //Delete modal show
       let deleteBookID = null;
-      function deleteBook(authorID) {
-        deleteBookID = authorID;
+
+      function deleteBook(bookID) {
+        deleteBookID = bookID;
+        console.log
         //show delete modal
         let deleteModal = new bootstrap.Modal(
-                document.getElementById("deleteBookModal")
+          document.getElementById("deleteBookModal")
         );
         deleteModal.show();
       }
 
       //Delete finally
 
-      async function deleteAuthorFinally() {
-        let URL = "https://bs-api.sobuj.net/view/authors/deleteAuthor.php";
+      async function deleteBookFinally() {
+        let URL = "https://bs-api.sobuj.net/view/books/deleteBook.php";
 
         try {
+          console.log("Delete ID", deleteBookID);
           if (!deleteBookID) {
             alert("Invalid ID");
             return;
           }
 
+          
           //Append data
           let formData = new FormData();
-          formData.append("author_id", deleteBookID);
+          formData.append("book_id", deleteBookID);
 
           //send the req
           let response = await axios.post(URL, formData);
 
           //check API response
           if (response.status === 200) {
-            alert("Success");
+            alert("Book Deleted Successfully");
 
             //close the modal
             let modal = bootstrap.Modal.getInstance(
-                    document.getElementById("deleteBookModal")
+              document.getElementById("deleteBookModal")
             );
             modal.hide();
 
+            //refresh
             getBooks();
 
           } else {
